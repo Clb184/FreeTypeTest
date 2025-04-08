@@ -1,0 +1,9 @@
+[submodule "deps/glfw"]
+	path = deps/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "deps/directxmath"]
+	path = deps/directxmath
+	url = https://github.com/microsoft/DirectXMath.git
+[submodule "deps/FreeType"]
+	path = deps/FreeType
+	url = https://gitlab.freedesktop.org/freetype/freetype.git

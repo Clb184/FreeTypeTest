@@ -1,0 +1,8 @@
+.vs/
+.vscode/
+.git/
+
+[Bb][Uu][Ii][Ll][Dd]
+# Glew must be downloaded and added manually, I don't know any other way...
+deps/glew/
+out/
