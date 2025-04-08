@@ -20,15 +20,18 @@ file(GLOB hpp_files src/*.hpp src/*.h)
 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 add_compile_definitions(GLEW_STATIC)
 
-add_executable(${PROJECT_NAME} ${cpp_files})
+
+set(EXE_NAME ${PROJECT_NAME}d)
+message(${EXE_NAME})
+add_executable(${EXE_NAME} ${cpp_files})
 add_subdirectory(deps/glew/build/cmake)
 add_subdirectory(deps/glfw)
 add_subdirectory(deps/FreeType)
 add_subdirectory(deps/DirectXMath)
-target_link_libraries(${PROJECT_NAME} glfw glew_s freetype DirectXMath)
+target_link_libraries(${EXE_NAME} glfw glew_s freetype DirectXMath)
 
 # Additional include directories
-target_include_directories(${PROJECT_NAME} 
+target_include_directories(${EXE_NAME} 
 	PUBLIC include/
 	PUBLIC deps/glew/include/
 	)
