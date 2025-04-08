@@ -1,7 +1,6 @@
 # CMake version 3.5, idk why but it may be useful
 cmake_minimum_required(VERSION 3.5)
 
-set(FreeTypeProj FreeTypeTest)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -11,7 +10,7 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project(${(FreeTypeProj} LANGUAGES C CXX)
+project(FreeTypeTest LANGUAGES C CXX)
 
 # Source files (cpp) and header files (hpp & h)
 file(GLOB cpp_files src/*.cpp)
@@ -21,7 +20,7 @@ file(GLOB hpp_files src/*.hpp src/*.h)
 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 add_compile_definitions(GLEW_STATIC)
 
-add_executable(${PROJECT_NAME} ${hpp_files} ${cpp_files})
+add_executable(${PROJECT_NAME} ${cpp_files})
 add_subdirectory(deps/glew/build/cmake)
 add_subdirectory(deps/glfw)
 add_subdirectory(deps/FreeType)
