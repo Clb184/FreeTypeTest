@@ -10,11 +10,18 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
+if(MSVC)
+	message("sal.h already comes with VS...")
+else()
+	message("Getting sal.h for DirectXMath")
+	execute_process(COMMAND curl -L --output ${CMAKE_HOME_DIRECTORY}/include/sal.h https://raw.githubusercontent.com/dotnet/runtime/main/src/coreclr/pal/inc/rt/sal.h)
+endif()
+
 project(FreeTypeTest LANGUAGES C CXX)
 
 # Source files (cpp) and header files (hpp & h)
-file(GLOB cpp_files src/*.cpp)
-file(GLOB hpp_files src/*.hpp src/*.h)
+file(GLOB cpp_files src/*.cpp src/*.c)
+file(GLOB hpp_files include/*.hpp include/*.h)
 
 # exe
 add_compile_definitions(_CRT_SECURE_NO_WARNINGS)

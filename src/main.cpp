@@ -1,3 +1,10 @@
+#ifdef __linux__
+#include <algorithm>
+#include <iterator>
+#include <utility>
+#include <format>
+#endif
+
 #include <DirectXMath.h>
 #include <ft2build.h>
 #include <freetype/freetype.h>
@@ -109,7 +116,7 @@ int main(int argc, char** argv) {
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glBindTexture(GL_TEXTURE_2D, font_atlas);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 256, 0, GL_RED, GL_UNSIGNED_BYTE, pPixel);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	//glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
 	while (!glfwWindowShouldClose(pWindow)) {
 		glfwPollEvents();
