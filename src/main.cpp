@@ -59,13 +59,21 @@ int main(int argc, char** argv) {
 
 
 	// Create many surfaces
-	constexpr int max_faces = 256 - 32;
+	/*constexpr int max_faces = 256 - 32;
 	GLuint faces_rendered[max_faces];
-	glGenTextures(max_faces, faces_rendered);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(max_faces, faces_rendered);*/
+
+
+	GLuint font_atlas;
+	glGenTextures(1, &font_atlas);
+	char* pPixel = nullptr;
+	pPixel = new char[256 * 256]; // 256 x 256 bitmap
+	memset(pPixel, 0x00, sizeof(char) * 256 * 256);
+	int x = 0, y = 0;
+
 
 	// Get faces and map?
-	for (char c = 'A'; c <= 'Z'; c++) {
+	for (char c = ' '; c < 0x100; c++) {
 		int idx = FT_Get_Char_Index(face, c); // Get char index, like name says
 
 		// Load a glyph
@@ -81,9 +89,27 @@ int main(int argc, char** argv) {
 			printf("Error rendering %c glyph\n", c);
 			continue;
 		}
-		glBindTexture(GL_TEXTURE_2D, faces_rendered[c - 32]);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
+		int w = face->glyph->bitmap.width, h = face->glyph->bitmap.rows;
+
+		char* pGlyphPixels = (char*)face->glyph->bitmap.buffer;
+		assert(h <= 16);
+		h = (h > 16) ? 16 : h;
+		for (int j = h - 1; j >= 0; j--) {
+			memcpy(&pPixel[256 * (255 - 16 - y + j ) + x], &pGlyphPixels[j * w], w);
+		}
+		x += 16;
+		if (x >= 256) {
+			x = 0;
+			y += 16;
+		}
+		if (y >= 256) {
+			break;
+		}
 	}
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glBindTexture(GL_TEXTURE_2D, font_atlas);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 256, 0, GL_RED, GL_UNSIGNED_BYTE, pPixel);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
 	while (!glfwWindowShouldClose(pWindow)) {
