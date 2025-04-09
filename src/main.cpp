@@ -92,7 +92,6 @@ int main(int argc, char** argv) {
 		int w = face->glyph->bitmap.width, h = face->glyph->bitmap.rows;
 
 		char* pGlyphPixels = (char*)face->glyph->bitmap.buffer;
-		assert(h <= 16);
 		h = (h > 16) ? 16 : h;
 		for (int j = h - 1; j >= 0; j--) {
 			memcpy(&pPixel[256 * (255 - 16 - y + j ) + x], &pGlyphPixels[j * w], w);

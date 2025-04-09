@@ -6,3 +6,5 @@
 # Glew must be downloaded and added manually, I don't know any other way...
 deps/glew/
 out/
+include/sal.h
+include/concurrencysal.h
