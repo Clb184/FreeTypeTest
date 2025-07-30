@@ -14,7 +14,7 @@ if(MSVC)
 	message("sal.h already comes with VS...")
 else()
 	message("Getting sal.h for DirectXMath")
-	execute_process(COMMAND curl -L --output ${CMAKE_HOME_DIRECTORY}/include/sal.h https://raw.githubusercontent.com/dotnet/runtime/main/src/coreclr/pal/inc/rt/sal.h)
+	file(DOWNLOAD https://raw.githubusercontent.com/dotnet/runtime/main/src/coreclr/pal/inc/rt/sal.h  ${CMAKE_HOME_DIRECTORY}/include/sal.h )
 endif()
 
 project(FreeTypeTest LANGUAGES C CXX)
@@ -36,10 +36,12 @@ add_subdirectory(deps/glfw)
 add_subdirectory(deps/FreeType)
 add_subdirectory(deps/DirectXMath)
 target_link_libraries(${EXE_NAME} glfw glew_s freetype DirectXMath)
-
+set_target_properties(${EXE_NAME} PROPERTIES DEBUGGER_WORKING_DIRECTORY ${CMAKE_HOME_DIRECTORY}/)
+message(${CMAKE_HOME_DIRECTORY})
 # Additional include directories
 target_include_directories(${EXE_NAME} 
-	PUBLIC include/
-	PUBLIC deps/glew/include/
-	)
+	PUBLIC
+		include/
+		deps/glew/include/
+)
 

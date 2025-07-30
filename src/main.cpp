@@ -51,7 +51,7 @@ int main(int argc, char** argv) {
 	}
 
 	// Get face data
-	er = FT_Set_Pixel_Sizes(face, 0, 16);
+	er = FT_Set_Char_Size(face, 16 << 6, 16 << 6, 64, 64);
 	if (FT_Err_Ok != er) {
 		printf("Failed setting face size (pixel)\n");
 		return -1;
